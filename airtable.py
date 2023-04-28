@@ -34,15 +34,6 @@ BASE_URL = f"https://api.airtable.com/v0/{BASE_ID}/{SHEET_NAME}"
 GET_URL = BASE_URL + f"?api_key={API_KEY}"
 
 
-def main() -> None:
-    """
-    Runs main testing actions.
-    """
-    # Specifies dock name, then field name
-    print(get_status("Portioning A", "Robot Processing"))
-    post_status("Portioning A", "Robot Processing", True)
-
-
 def _get_record_data(record_name: str) -> tuple[dict, str]:
     """
     Acquires field and id from specified record.
@@ -102,6 +93,10 @@ def post_status(record_name: str, field_name: str, value: bool) -> requests.Resp
     return requests.patch(url=post_url, json=data, headers=HEADERS)
 
 
-# Runs main code if file is run from console but NOT if included as library.
-if __name__ == "__main__":
-    main()
+"""
+EXAMPLE SYNTAX
+
+value = get_status("Portioning A", "Robot Processing")
+print(value)
+post_status("Portioning A", "Robot Processing", not value)
+"""
