@@ -1,3 +1,7 @@
+"""
+WRITTEN BY DARYA CLARK
+"""
+
 ################################
 # THINGS EVERYONE NEEDS #
 import time

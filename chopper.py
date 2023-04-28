@@ -1,3 +1,7 @@
+"""
+WRITTEN BY PHILLIP ROOS
+"""
+
 from time import sleep
 
 import RPi.GPIO as GPIO
