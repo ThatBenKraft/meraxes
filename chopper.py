@@ -93,6 +93,13 @@ def single_chop():
     knife_up()
 
 
+def button_pushed(pin: int = 5) -> bool:
+    """
+    Returns with the state of the button pin.
+    """
+    return not GPIO.input(pin)  # type:ignore
+
+
 def knife_up() -> None:
 
     for _ in range(20):

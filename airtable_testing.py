@@ -1,6 +1,7 @@
 """
 Example code for running airtable communication. This specific example is for
-the BANANA CHOPPING ROBOT"""
+a simplified version of the BANANA CHOPPING ROBOT.
+"""
 
 import time
 
@@ -8,7 +9,7 @@ import airtable
 import chopper
 
 
-def main():
+def main() -> None:
     """
     Runs main program code.
     """
@@ -35,10 +36,15 @@ def main():
 
         # Sets previous state for next iteration
         previous_dock_state = trasport_docked
+        # Checks for emergency stop
+        emergency_stop = chopper.button_pushed()
         # Sets loop speed
         time.sleep(1)
 
 
 # Runs main code if file is run from console but NOT if included as library.
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
