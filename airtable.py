@@ -45,6 +45,7 @@ def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
         raise ConnectionError(f"Airtable error occured: {response['error']}")
     # For each record:
     for record in response["records"]:
+        print(record)
         # Acquires fields and record is
         fields = record["fields"]
         record_id = record["id"]
