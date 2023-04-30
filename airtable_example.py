@@ -14,7 +14,7 @@ def main() -> None:
     Runs main program code.
     """
 
-    # *** CHANGE THIS ENTIRE FUNCTION TO FIT YOUR ROBOT ***
+    ### CHANGE THIS ENTIRE FUNCTION TO FIT YOUR ROBOT ###
 
     # Defines needed variables
     emergency_stop = False
@@ -23,16 +23,20 @@ def main() -> None:
     # Loops until emergency stop
     while not emergency_stop:
         # Gets specific value from airtable
-        trasport_docked = airtable.get_status("Processing B", "Transport Present")
+        trasport_docked = airtable.get_dock("Processing B", "Transport Present")
+        # OR you could say more generally:
+        # trasport_docked = airtable.get_status("Dock Information", "Processing B", "Transport Present")
 
         # If banana transport has just LEFT:
         if trasport_docked < previous_dock_state:
             # Post to airtable that processing is beginning
-            airtable.post_status("Processing B", "Robot Processing", True)
+            airtable.post_dock("Processing B", "Robot Processing", True)
+            # OR you could say more generally:
+            # trasport_docked = airtable.post_status("Dock Information", "Processing B", "Robot Processing", True)
             # Execute main chopping action
             chopper.main()
             # Posts again to airtable to denote the completion of action
-            airtable.post_status("Processing B", "Robot Processing", False)
+            airtable.post_dock("Processing B", "Robot Processing", False)
 
         # Sets previous state for next iteration
         previous_dock_state = trasport_docked

@@ -158,5 +158,5 @@ EXAMPLE SYNTAX
 
 value = get_status("Dock States", "Portioning A", "Robot Processing")
 print(value)
-post_status("Portioning A", "Robot Processing", not value)
+post_status("Dock States", "Portioning A", "Robot Processing", not value)
 """
