@@ -21,7 +21,9 @@ __status__ = "Prototype"
 # cmon don't do bad stuff with this
 API_KEY = "keyKf7fEzdNw4S7qi"
 BASE_ID = "appdQp07FQeU5VXnL"
-SHEET_NAME = "Dock States"
+
+# Creates basic urls
+BASE_URL = f"https://api.airtable.com/v0/{BASE_ID}"
 
 # Defines headers for post authorization
 HEADERS = {
@@ -29,17 +31,15 @@ HEADERS = {
     "Content-Type": "application/json",
 }
 
-# Creates basic urls
-BASE_URL = f"https://api.airtable.com/v0/{BASE_ID}/{SHEET_NAME}"
-GET_URL = BASE_URL + f"?api_key={API_KEY}"
 
-
-def _get_record_data(record_name: str) -> tuple[dict, str]:
+def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
     """
-    Acquires field and id from specified record.
+    Acquires field and id from specified Airtable sheet under record.
     """
     # Gets response from URL and converts to dictionary
-    response = requests.get(url=GET_URL).json()
+    get_url = BASE_URL + f"/{sheet_name}?api_key={API_KEY}"
+
+    response = requests.get(url=get_url).json()
     # Error handling
     if "error" in response:
         raise ConnectionError(f"Airtable error occured: {response['error']}")
@@ -58,15 +58,17 @@ def _get_record_data(record_name: str) -> tuple[dict, str]:
     return {}, ""
 
 
-def get_status(record_name: str, field_name: str) -> bool:
+def get_status(sheet_name: str, record_name: str, field_name: str) -> bool:
     """
-    Acquires value from Airtable from field under record. Returns boolean value.
+    Acquires value from specified Airtable sheet under specified record and field.
+    Returns boolean value.
 
     ### Parameters
+        sheet_name: Name of sheet to pull information from
         record_name: Name of dock for data to be gathered
         field_name: Name of dock state
     """
-    fields, _ = _get_record_data(record_name)
+    fields, _ = _get_record_data(sheet_name, record_name)
     # Only returns value if field is present
     if field_name in fields:
         return bool(fields[field_name])
@@ -74,19 +76,22 @@ def get_status(record_name: str, field_name: str) -> bool:
         raise ValueError("Field does not exist in record!")
 
 
-def post_status(record_name: str, field_name: str, value: bool) -> requests.Response:
+def post_status(
+    sheet_name: str, record_name: str, field_name: str, value: bool
+) -> requests.Response:
     """
-    Posts value to field under record. Returns with path response.
+    Posts value to specified sheet under record and field. Returns with path response.
 
     ### Parameters
+        sheet_name: Name of sheet of which to post information
         record_name: Name of dock for data to be gathered
         field_name: Name of dock state
         value: Value to be set in field
     """
     # Acquires record ID
-    _, record_id = _get_record_data(record_name)
+    _, record_id = _get_record_data(sheet_name, record_name)
     # Builds posting URL
-    post_url = BASE_URL + f"/{record_id}"
+    post_url = BASE_URL + f"/{sheet_name}/{record_id}"
     # Builds appropriate data to post
     data = {"fields": {field_name: int(value)}}
     # Posts the data
@@ -94,9 +99,64 @@ def post_status(record_name: str, field_name: str, value: bool) -> requests.Resp
 
 
 """
+================================
+        HELPER FUNCTIONS
+================================
+"""
+
+
+def get_dock(record_name: str, field_name: str) -> bool:
+    """
+    Posts value to dock sheet under record and field. Returns with path response.
+
+    ### Parameters
+        record_name: Name of dock for data to be gathered
+        field_name: Name of dock state
+        value: Value to be set in field
+    """
+    return get_status("Dock States", record_name, field_name)
+
+
+def post_dock(record_name: str, field_name: str, value: bool) -> requests.Response:
+    """
+    Posts value to doc sheet under record and field. Returns with path response.
+
+    ### Parameters
+        record_name: Name of dock for data to be gathered
+        field_name: Name of dock state
+        value: Value to be set in field
+    """
+    return post_status("Dock States", record_name, field_name, value)
+
+
+def get_order(record_name: str, field_name: str) -> bool:
+    """
+    Posts value to order sheet under record and field. Returns with path response.
+
+    ### Parameters
+        record_name: Name of dock for data to be gathered
+        field_name: Name of dock state
+        value: Value to be set in field
+    """
+    return get_status("Order Information", record_name, field_name)
+
+
+def post_order(record_name: str, field_name: str, value: bool) -> requests.Response:
+    """
+    Posts value to order sheet under record and field. Returns with path response.
+
+    ### Parameters
+        record_name: Name of dock for data to be gathered
+        field_name: Name of dock state
+        value: Value to be set in field
+    """
+    return post_status("Order Information", record_name, field_name, value)
+
+
+"""
 EXAMPLE SYNTAX
 
-value = get_status("Portioning A", "Robot Processing")
+value = get_status("Dock States", "Portioning A", "Robot Processing")
 print(value)
 post_status("Portioning A", "Robot Processing", not value)
 """
