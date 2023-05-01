@@ -113,7 +113,6 @@ def get_dock(record_name: str, field_name: str) -> bool:
     ### Parameters
         record_name: Name of dock for data to be gathered
         field_name: Name of dock state
-        value: Value to be set in field
     """
     return get_status("Dock States", record_name, field_name)
 
@@ -137,7 +136,6 @@ def get_order(record_name: str, field_name: str) -> bool:
     ### Parameters
         record_name: Name of dock for data to be gathered
         field_name: Name of dock state
-        value: Value to be set in field
     """
     return get_status("Order Information", record_name, field_name)
 
