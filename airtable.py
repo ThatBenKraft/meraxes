@@ -153,7 +153,15 @@ def post_order(record_name: str, field_name: str, value: bool) -> requests.Respo
 
 
 """
-EXAMPLE SYNTAX
+==============================
+        EXAMPLE SYNTAX
+==============================
+
+value = get_dock("Portioning A", "Robot Processing")
+print(value)
+post_dock("Portioning A", "Robot Processing", not value)
+
+OR...
 
 value = get_status("Dock States", "Portioning A", "Robot Processing")
 print(value)
