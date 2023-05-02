@@ -63,7 +63,6 @@ def get_status(sheet_name: str, record_name: str, field_name: str) -> bool:
     """
     Acquires value from specified Airtable sheet under specified record and field.
     Returns boolean value.
-
     ### Parameters
         sheet_name: Name of sheet to pull information from
         record_name: Name of dock for data to be gathered
@@ -82,11 +81,10 @@ def post_status(
 ) -> requests.Response:
     """
     Posts value to specified sheet under record and field. Returns with path response.
-
     ### Parameters
         sheet_name: Name of sheet of which to post information
-        record_name: Name of dock for data to be gathered
-        field_name: Name of dock state
+        record_name: Name of record for data to be gathered
+        field_name: Name of record state
         value: Value to be set in field
     """
     # Acquires record ID
@@ -109,7 +107,6 @@ def post_status(
 def get_dock(record_name: str, field_name: str) -> bool:
     """
     Posts value to dock sheet under record and field. Returns with path response.
-
     ### Parameters
         record_name: Name of dock for data to be gathered
         field_name: Name of dock state
@@ -120,7 +117,6 @@ def get_dock(record_name: str, field_name: str) -> bool:
 def post_dock(record_name: str, field_name: str, value: bool) -> requests.Response:
     """
     Posts value to doc sheet under record and field. Returns with path response.
-
     ### Parameters
         record_name: Name of dock for data to be gathered
         field_name: Name of dock state
@@ -132,10 +128,9 @@ def post_dock(record_name: str, field_name: str, value: bool) -> requests.Respon
 def get_order(record_name: str, field_name: str) -> bool:
     """
     Posts value to order sheet under record and field. Returns with path response.
-
     ### Parameters
-        record_name: Name of dock for data to be gathered
-        field_name: Name of dock state
+        record_name: Name of order for data to be gathered
+        field_name: Name of order state
     """
     return get_status("Order Information", record_name, field_name)
 
@@ -143,10 +138,9 @@ def get_order(record_name: str, field_name: str) -> bool:
 def post_order(record_name: str, field_name: str, value: bool) -> requests.Response:
     """
     Posts value to order sheet under record and field. Returns with path response.
-
     ### Parameters
-        record_name: Name of dock for data to be gathered
-        field_name: Name of dock state
+        record_name: Name of order for data to be gathered
+        field_name: Name of order state
         value: Value to be set in field
     """
     return post_status("Order Information", record_name, field_name, value)
