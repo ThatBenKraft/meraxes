@@ -4,8 +4,6 @@ Allows for the interfacing of the House of Smoothies Airtable. get_status() and
 post_status() take dock name and field name to read and write from table.
 """
 
-from typing import Any
-
 import requests
 
 __author__ = "Ben Kraft"
@@ -147,7 +145,6 @@ def post_order(record_name: str, field_name: str, value: bool) -> requests.Respo
 ==============================
         EXAMPLE SYNTAX
 ==============================
-"""
 
 value = get_dock("Start Station", "Transport Present")
 print(value)
@@ -155,6 +152,7 @@ post_dock("Start Station", "Transport Present", not value)
 
 # OR...
 
-# value = get_status("Dock States", "Portioning A", "Robot Processing")
-# print(value)
-# post_status("Dock States", "Portioning A", "Robot Processing", not value)
+value = get_status("Dock States", "Portioning A", "Robot Processing")
+print(value)
+post_status("Dock States", "Portioning A", "Robot Processing", not value)
+"""
