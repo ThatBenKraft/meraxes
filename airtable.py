@@ -45,15 +45,12 @@ def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
         raise ConnectionError(f"Airtable error occured: {response['error']}")
     # For each record:
     for record in response["records"]:
-        print(record)
         # Acquires fields and record is
         fields = record["fields"]
         record_id = record["id"]
         # If specified record:
         if fields["Name"] == record_name:
             return fields, record_id
-        else:
-            raise ValueError("Record does not exist in table!")
     # Returns if no records exist
     print("WARNING: No records exist in table!")
     return {}, ""
@@ -65,8 +62,8 @@ def get_status(sheet_name: str, record_name: str, field_name: str) -> bool:
     Returns boolean value.
     ### Parameters
         sheet_name: Name of sheet to pull information from
-        record_name: Name of dock for data to be gathered
-        field_name: Name of dock state
+        record_name: Name of record for data to be gathered
+        field_name: Name of record state
     """
     fields, _ = _get_record_data(sheet_name, record_name)
     # Only returns value if field is present
@@ -150,14 +147,14 @@ def post_order(record_name: str, field_name: str, value: bool) -> requests.Respo
 ==============================
         EXAMPLE SYNTAX
 ==============================
-
-value = get_dock("Portioning A", "Robot Processing")
-print(value)
-post_dock("Portioning A", "Robot Processing", not value)
-
-OR...
-
-value = get_status("Dock States", "Portioning A", "Robot Processing")
-print(value)
-post_status("Dock States", "Portioning A", "Robot Processing", not value)
 """
+
+value = get_dock("Start Station", "Transport Present")
+print(value)
+post_dock("Start Station", "Transport Present", not value)
+
+# OR...
+
+# value = get_status("Dock States", "Portioning A", "Robot Processing")
+# print(value)
+# post_status("Dock States", "Portioning A", "Robot Processing", not value)
