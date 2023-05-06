@@ -25,23 +25,22 @@ rclpy.init()
 
 
 def main():
-
-    ALERT_SONG = os.path.join("tracks", "Alert Robot Song.mid")
     VICTORY_SONG = os.path.join("tracks", "Victory Robot Song.mid")
-    PIRATE_SONG = os.path.join("tracks", "new_pirate.mid")
-    WHOA = os.path.join("tracks", "easy.mid")
+    # VICTORY_SONG = os.path.join("tracks", "Victory Robot Song.mid")
+    # PIRATE_SONG = os.path.join("tracks", "new_pirate.mid")
+    # WHOA = os.path.join("tracks", "Hark_the_Herald_Angels_Sing_Pentatonix.mid")
 
-    midi = MidiPublisher(1, ALERT_SONG, VICTORY_SONG, WHOA)
+    time.sleep(3)
 
-    midi.track_readout(WHOA)
+    midi = MidiPublisher(1, VICTORY_SONG)
 
-    time.sleep(2)
+    midi.track_readout(VICTORY_SONG)
 
-    # print(midi.songs)
-    time.sleep(1)
-    midi.play_track(WHOA, 0)
+    time.sleep(3)
 
-    time.sleep(100)
+    midi.play_track(VICTORY_SONG, 0)
+
+    time.sleep(10)
 
 
 class MidiPublisher(Node):
@@ -150,7 +149,7 @@ class MidiPublisher(Node):
         runtime.nanosec = int(nanoseconds)
         note = AudioNote()
         note.frequency = int(frequency)
-        print(f"Frequency: {frequency}")
+        # print(f"Frequency: {frequency}")
         note.max_runtime = runtime
         return note
 
@@ -179,7 +178,6 @@ class MidiPublisher(Node):
         song = self.songs[midi_filepath]
 
         for index, track in enumerate(song):
-
             print(f"Track {index}: {len(track.notes)} notes")
 
 
