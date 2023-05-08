@@ -16,7 +16,7 @@ __author__ = "Ben Kraft"
 __copyright__ = "None"
 __credits__ = "Ben Kraft"
 __license__ = "MIT"
-__version__ = "1.0"
+__version__ = "1.1"
 __maintainer__ = "Ben Kraft"
 __email__ = "benjamin.kraft@tufts.edu"
 __status__ = "Prototype"
@@ -25,12 +25,17 @@ rclpy.init()
 
 
 def main():
-    VICTORY_SONG = os.path.join("tracks", "Victory Robot Song.mid")
-    # VICTORY_SONG = os.path.join("tracks", "Victory Robot Song.mid")
-    # PIRATE_SONG = os.path.join("tracks", "new_pirate.mid")
-    # WHOA = os.path.join("tracks", "Hark_the_Herald_Angels_Sing_Pentatonix.mid")
+    """
+    Runs main song actions.
+    """
+    current_directory = os.path.dirname(os.path.realpath(__file__))
 
-    time.sleep(3)
+    VICTORY_SONG = os.path.join(current_directory, "tracks", "Victory Robot Song.mid")
+    # VICTORY_SONG = os.path.join(current_directory, "tracks", "Victory Robot Song.mid")
+    # PIRATE_SONG = os.path.join(current_directory, "tracks", "new_pirate.mid")
+    # WHOA = os.path.join(current_directory, "tracks", "Hark_the_Herald_Angels_Sing_Pentatonix.mid")
+
+    time.sleep(2)
 
     midi = MidiPublisher(1, VICTORY_SONG)
 

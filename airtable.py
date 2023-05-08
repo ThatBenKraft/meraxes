@@ -37,21 +37,20 @@ def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
     # Gets response from URL and converts to dictionary
     get_url = BASE_URL + f"/{sheet_name}?api_key={API_KEY}"
 
-    response = requests.get(url=get_url).json()
+    response: dict = requests.get(url=get_url).json()
     # Error handling
     if "error" in response:
         raise ConnectionError(f"Airtable error occured: {response['error']}")
     # For each record:
     for record in response["records"]:
         # Acquires fields and record is
-        fields = record["fields"]
-        record_id = record["id"]
+        fields: dict = record["fields"]
+        record_id: str = record["id"]
         # If specified record:
         if fields["Name"] == record_name:
             return fields, record_id
-    # Returns if no records exist
-    print("WARNING: No records exist in table!")
-    return {}, ""
+    # If record is not found
+    raise ValueError("Record does not exist in table!")
 
 
 def get_status(sheet_name: str, record_name: str, field_name: str) -> bool:
