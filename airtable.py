@@ -34,9 +34,9 @@ def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
     """
     Acquires field and id from specified Airtable sheet under record.
     """
-    # Gets response from URL and converts to dictionary
+    # Builds url with sheet and api key
     get_url = BASE_URL + f"/{sheet_name}?api_key={API_KEY}"
-
+    # Gets response from URL and converts to dictionary
     response: dict = requests.get(url=get_url).json()
     # Error handling
     if "error" in response:
@@ -82,7 +82,10 @@ def post_status(
         value: Value to be set in field
     """
     # Acquires record ID
-    _, record_id = _get_record_data(sheet_name, record_name)
+    fields, record_id = _get_record_data(sheet_name, record_name)
+    # Raises exception if field does not already exist in record
+    if field_name not in fields:
+        raise ValueError("Field does not exist in record!")
     # Builds posting URL
     post_url = BASE_URL + f"/{sheet_name}/{record_id}"
     # Builds appropriate data to post
