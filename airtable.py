@@ -21,11 +21,11 @@ API_KEY = "keyKf7fEzdNw4S7qi"
 BASE_ID = "appdQp07FQeU5VXnL"
 
 # Creates basic urls
-BASE_URL = f"https://api.airtable.com/v0/{BASE_ID}"
+BASE_URL = "https://api.airtable.com/v0/" + BASE_ID
 
 # Defines headers for post authorization
 HEADERS = {
-    "Authorization": f"Bearer {API_KEY}",
+    "Authorization": "Bearer" + API_KEY,
     "Content-Type": "application/json",
 }
 
@@ -37,10 +37,10 @@ def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
     # Builds url with sheet and api key
     get_url = BASE_URL + f"/{sheet_name}?api_key={API_KEY}"
     # Gets response from URL and converts to dictionary
-    response: dict = requests.get(url=get_url).json()
+    response: dict = requests.get(get_url).json()
     # Error handling
     if "error" in response:
-        raise ConnectionError(f"Airtable error occured: {response['error']}")
+        raise ConnectionError("Airtable error occured:" + response["error"]["message"])
     # For each record:
     for record in response["records"]:
         # Acquires fields and record is
@@ -120,27 +120,6 @@ def post_dock(record_name: str, field_name: str, value: bool) -> requests.Respon
         value: Value to be set in field
     """
     return post_status("Dock States", record_name, field_name, value)
-
-
-def get_order(record_name: str, field_name: str) -> bool:
-    """
-    Posts value to order sheet under record and field. Returns with path response.
-    ### Parameters
-        record_name: Name of order for data to be gathered
-        field_name: Name of order state
-    """
-    return get_status("Order Information", record_name, field_name)
-
-
-def post_order(record_name: str, field_name: str, value: bool) -> requests.Response:
-    """
-    Posts value to order sheet under record and field. Returns with path response.
-    ### Parameters
-        record_name: Name of order for data to be gathered
-        field_name: Name of order state
-        value: Value to be set in field
-    """
-    return post_status("Order Information", record_name, field_name, value)
 
 
 """
