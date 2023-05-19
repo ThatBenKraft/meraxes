@@ -17,7 +17,7 @@ __status__ = "Prototype"
 
 # Defines airtable information
 # cmon don't do bad stuff with this
-API_KEY = "keyKf7fEzdNw4S7qi"
+API_KEY = "[ REDACTED ]"
 BASE_ID = "appdQp07FQeU5VXnL"
 
 # Creates basic urls
