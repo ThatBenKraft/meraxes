@@ -53,7 +53,11 @@ def _get_record_data(sheet_name: str, record_name: str) -> tuple[dict, str]:
     raise ValueError("Record does not exist in table!")
 
 
-def get_status(sheet_name: str, record_name: str, field_name: str) -> bool:
+def get_status(
+    sheet_name: str,
+    record_name: str,
+    field_name: str,
+) -> bool:
     """
     Acquires value from specified Airtable sheet under specified record and field.
     Returns boolean value.
